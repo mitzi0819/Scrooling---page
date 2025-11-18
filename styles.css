@@ -1,46 +1,141 @@
-* { margin:0; padding:0; box-sizing:border-box; }
-  html, body { height:100%; font-family: Arial, sans-serif; overflow-x: hidden; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  /* Intro */
-  .intro {
-    width:100%;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background-color:#222;
-    color:#fff;
-    font-size:3rem;
-    font-weight:bold;
-  }
+html,
+body {
+  height: 100%;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
 
-  /* Hochhaus Stockwerke */
-  .floor {
-    width:100%;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    border-bottom:2px solid #333;
-    position:relative;
-    opacity:0; /* Start unsichtbar für Animation */
-  }
+/* Intro */
+.intro {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #222;
+  color: #fff;
+  font-size: 3rem;
+  font-weight: bold;
+}
 
-  .illustration {
-    width:80%;
-    height:80%;
-    background-color:#ccc; /* Platzhalter */
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:2rem;
-    color:#333;
-    border:2px dashed #666;
-  }
+/* Hochhaus Stockwerke */
+.floor {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid #333;
+  position: relative;
+  opacity: 0;
+  /* Start unsichtbar für Fade-in Animation */
+   background-image: url("haus.png");
+  background-repeat: repeat;   /* Kacheln */
+  background-size: auto;       /* Originalgröße */
+  background-position: 0 0;
+  
+}
 
-  /* Unterschiedliche Farben für Orientierung */
-  .floor1 { background-color: #f9f9f9; }
-  .floor2 { background-color: #e6e6e6; }
-  .floor3 { background-color: #d1d1d1; }
-  .floor4 { background-color: #c0c0c0; }
-  .floor5 { background-color: #aaaaaa; }
+/* Platzhalter Illustration für normale Stockwerke */
+.illustration {
+  width: 80%;
+  height: 80%;
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  color: #333;
+  border: 2px dashed #666;
+}
+
+/* Farben zur Orientierung */
+.floor1 {
+  background-color: #f9f9f9;
+}
+
+.floor2 {
+  background-color: #e6e6e6;
+}
+
+.floor3 {
+  background-color: #d1d1d1;
+}
+
+.floor4 {
+  background-color: #c0c0c0;
+}
+
+.floor5 {
+  background-color: #aaaaaa;
+}
+
+/* -------------------------------------- */
+/* 🔵 Horizontal Scroll Bereich in Stock 2 */
+/* -------------------------------------- */
+
+/* 2. Stockwerk */
+.floor2 {
+  position: relative;
+  overflow: hidden;
+  background-color: #e6e6e6;
+  /* Rand wie bei anderen Floors */
+  border-bottom: 2px solid #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Sichtbarer Innenbereich (Panels) */
+.inner-wrapper {
+  width: 80%;
+  /* wie die Illustrationen in anderen Floors */
+  height: 80%;
+  overflow: hidden;
+  /* Panel2 unsichtbar, solange nicht gescrollt */
+  border-radius: 8px;
+  position: relative;
+}
+
+/* Horizontale Panels nebeneinander */
+.h-scroll {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 300%;
+  /* 2 Panels nebeneinander */
+  display: flex;
+}
+
+/* Panels */
+.panel {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  color: white;
+  border: 2px dashed #666;
+  /* Optional wie bei Illustration */
+}
+
+.panel1 {
+  background: #444;
+}
+
+/* dunkelgrau */
+.panel2 {
+  background: #123c7d;
+}
+
+.panel3 {
+  background: darkolivegreen;
+}
