@@ -37,7 +37,7 @@ gsap.utils.toArray(".floor").forEach(floor => {
 // --------------------------------------------------
 
 let hScroll = gsap.to(".h-scroll", {
-  x: "-50%",     // Panel1 raus → Panel2 rein
+  x: "-50%",
   ease: "none",
   paused: true
 });
@@ -45,18 +45,15 @@ let hScroll = gsap.to(".h-scroll", {
 let progress = 0;
 const innerWrapper = document.querySelector(".inner-wrapper");
 
-// Maus-Wheel Event nur im 2. Stockwerk
 innerWrapper.addEventListener(
   "wheel",
   (e) => {
     e.preventDefault();
 
-     // 🔥 Neu: horizontales scrollen über deltaX
+    // 🔥 Neu: horizontales scrollen über deltaX
     let delta = (e.deltaY + e.deltaX) * 0.001;
 
     progress += delta;
-
-    // Grenzen zwischen 0 und 1
     progress = Math.min(Math.max(progress, 0), 1);
 
     hScroll.progress(progress);

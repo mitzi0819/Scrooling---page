@@ -109,14 +109,13 @@ body {
   top: 0;
   left: 0;
   height: 100%;
-  width: 300%;
-  /* 2 Panels nebeneinander */
+  width: calc(100% * 3); /* Platz für 3 Panels */
   display: flex;
 }
 
 /* Panels */
 .panel {
-  width: 50%;
+  width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
