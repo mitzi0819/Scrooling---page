@@ -6,37 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Sicherstellen, dass die Seite ganz oben beginnt, bevor GSAP die Kontrolle übernimmt.
     window.scrollTo(0, 0);
 
-    // ----------------------------------------
-    // Timeline für Intro-Fade-Out → Automatisches Scrollen zum 1. Stock
-    // ----------------------------------------
-    gsap.timeline({
-            // Stellt sicher, dass die Animation nur einmal abläuft
-            once: true,
-            // Hier legen wir den Startpunkt fest, FALLS die Timeline aus irgendeinem Grund
-            // nicht automatisch starten sollte (was aber selten der Fall sein sollte)
-            delay: 0.1 
-        })
-        .to(".intro", {
-            opacity: 0,
-            duration: 0.8,
-            delay: 0.5,
-            ease: "power2.out",
-            onComplete: () => {
-                // Das Intro-Element *nach* dem Fade-Out aus dem Fluss nehmen
-                const intro = document.querySelector(".intro");
-                if (intro) intro.style.display = "none";
-            }
-        })
-        .to(window, {
-            // ⭐ Zwangsbefehl zum Scrollen zum .floor1 Element
-            scrollTo: {
-                y: ".floor1", // Scrollt zum ersten Element mit der Klasse .floor1
-                offsetY: 0
-            }, 
-            duration: 1.0, 
-            ease: "power2.inOut"
-        }, "<0.1"); // Startet kurz nach dem Intro-Fade-Out
-
+    
     // ----------------------------------------
     // Fade-in Animation für alle Stockwerke
     // ----------------------------------------

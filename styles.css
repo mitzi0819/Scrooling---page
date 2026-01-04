@@ -35,25 +35,37 @@ body {
   position: relative;
   opacity: 0;
   /* Start unsichtbar für Fade-in Animation */
-   background-image: url("haus.png");
-  background-repeat: repeat;   /* Kacheln */
-  background-size: auto;       /* Originalgröße */
+  background-image: url("haus.png");
+  background-repeat: repeat;
+  /* Kacheln */
+  background-size: auto;
+  /* Originalgröße */
   background-position: 0 0;
-  
 }
 
+
+
 /* Platzhalter Illustration für normale Stockwerke */
+
 .illustration {
   width: 80%;
-  height: 80%;
-  background-color: #ccc;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  color: #333;
-  border: 2px dashed #666;
+  height: 80vh;
+  aspect-ratio: 8 / 5;
+  background-color: transparent;
 }
+
+
+/* Optional: Wenn Sie das Bild als echtes <img>-Tag einfügen: */
+
+.illustration img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Passt das Bild an, ohne das Verhältnis zu verzerren */
+}
+
+
+
 
 /* Farben zur Orientierung */
 .floor1 {
@@ -79,62 +91,56 @@ body {
 /* -------------------------------------- */
 /* 🔵 Horizontal Scroll Bereich in Stock 2 */
 /* -------------------------------------- */
-
-/* 2. Stockwerk */
 .floor2 {
-  position: relative;
-  overflow: hidden;
-  background-color: #e6e6e6;
-  /* Rand wie bei anderen Floors */
-  border-bottom: 2px solid #333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+position: relative;
+overflow: hidden;
+background-color: #e6e6e6;
+/* Rand wie bei anderen Floors */
+border-bottom: 2px solid #333;
+display: flex;
+justify-content: center;
+align-items: center;
+overflow-x: scroll;
 }
 
 /* Sichtbarer Innenbereich (Panels) */
-.inner-wrapper {
-  width: 80%;
-  /* wie die Illustrationen in anderen Floors */
-  height: 80%;
-  overflow: hidden;
-  /* Panel2 unsichtbar, solange nicht gescrollt */
-  border-radius: 8px;
-  position: relative;
-}
+
 
 /* Horizontale Panels nebeneinander */
 .h-scroll {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: calc(100% * 3); /* Platz für 3 Panels */
-  display: flex;
+height: 80vh;
+width: calc(100% * 3);
+/* Platz für 3 Panels */
+display: flex;
 }
+
+
 
 /* Panels */
 .panel {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  color: white;
-  border: 2px dashed #666;
-  /* Optional wie bei Illustration */
+width: 80%;
+height: auto;
+aspect-ratio: 8 / 5;
+background-color: transparent;
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 2rem;
+color: white;
+border: 2px dashed #666;
+/* Optional wie bei Illustration */
 }
 
 .panel1 {
-  background: #444;
+background: #444;
 }
 
 /* dunkelgrau */
 .panel2 {
-  background: #123c7d;
+background: #123c7d;
 }
 
+
 .panel3 {
-  background: darkolivegreen;
+background: darkolivegreen;
 }
