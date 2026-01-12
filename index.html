@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -9,12 +9,17 @@
 </head>
 
 <body>
-    <!-- kommentar -->
-    <!-- Intro -->
-    <section class="intro">Willkommen im Hochhaus</section>
 
 
-    <!-- Hochhaus -->
+    <header>
+        <div class="headline">
+            <div class="inner">
+                <h1>Willkommen im Hochhaus</h1>
+                <p>Scroll down the page</p>
+            </div>
+        </div>
+    </header>
+
     <div class="building">
 
         <section class="floor floor1">
@@ -23,26 +28,74 @@
             </div>
         </section>
 
+
         <section class="floor floor2">
-            <div class="h-scroll">
-                <div class="panel panel1">
-                    <img src="pngs/verdächtige1_raum.png" alt="">
-                </div>
-                <div class="panel panel2">
-                    <img src="pngs/verdächtige2_raum.png" alt="">
-                </div>
-                <div class="panel panel3">
-                    <img src="pngs/verdächtige3_raum.png" alt="">
-                </div>
-            </div>
+            <div id="slider">
+                <!-- Slider Setup -->
+                <input type="radio" name="slider" id="slide1" checked />
+                <input type="radio" name="slider" id="slide2" />
+                <input type="radio" name="slider" id="slide3" />
+
+
+                <!-- The Slider -->
+                <div class="slides">
+                    <div class="overflow">
+                        <div class="track">
+                            <div class="slide">
+                                <div class="info">
+                                    <h3>Verdächtiger 1</h3>
+                                </div>
+                                <img src="pngs/verdächtige1_person-raum.png" />
+                            </div>
+                            <div class="slide">
+                                <div class="info">
+                                    <h3>Verdächtiger 2</h3>
+                                </div>
+                                <img src="pngs/verdächtige2_person-raum.png" />
+                            </div>
+                            <div class="slide">
+                                <div class="info">
+                                    <h3>Verdächtiger 3</h3>
+                                </div>
+                                <img src="pngs/verdächtige3_person-raum.png" />
+                            </div>
+
+                        </div> <!-- .inner -->
+                    </div> <!-- #overflow -->
+                </div> <!-- #slides -->
+
+                <!-- Controls and Active Slide Display -->
+                <div id="controls">
+                    <label for="slide1"></label>
+                    <label for="slide2"></label>
+                    <label for="slide3"></label>
+
+                </div> <!-- #controls -->
+
+                <div id="active">
+                    <label for="slide1"></label>
+                    <label for="slide2"></label>
+                    <label for="slide3"></label>
+
+                </div> <!-- #active -->
+            </div> <!-- #slider -->
         </section>
+
         <!-- Kommentar -->
 
         </section>
 
         <section class="floor floor3">
-            <div class="illustration">3. Stockwerk</div>
+            <div class="illustration flashlight-scene">
+                <!-- unten: schwarz/weiß -->
+                <img class="flashlight-layer flashlight-bw" src="pngs/dachboden-sw.png" alt="Tatort SW" draggable="false">
+
+                <!-- oben: gelb (wird maskiert) -->
+                <img class="flashlight-layer flashlight-yellow" src="pngs/dachboden-f2.png" alt="Tatort Gelb"
+                    draggable="false">
+            </div>
         </section>
+
 
         <section class="floor floor4">
             <div class="illustration">4. Stockwerk</div>
@@ -58,6 +111,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollToPlugin.min.js"></script>
     <script src="main.js"></script>
+
+
 
 </body>
 

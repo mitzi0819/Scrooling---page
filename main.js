@@ -29,48 +29,83 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ----------------------------------------
-    // Horizontal Scroll im 2. Stock
-    // ----------------------------------------
-    const hScrollAnim = gsap.to(".h-scroll", {
-        x: "-66.666%", // 3 Panels (100% / 3 * 2) = 66.666% Verschiebung
-        ease: "none",
-        paused: true
+  // Taschenlampen-Effekt (nur in .flashlight-scene)
+  // ----------------------------------------
+  const RADIUS = 160;     // Größe des Lichtkreises
+  const SOFT_EDGE = 70;   // Weicher Rand
+
+  document.querySelectorAll(".flashlight-scene").forEach(scene => {
+    const yellow = scene.querySelector(".flashlight-yellow");
+    if (!yellow) return;
+
+    function setMask(x, y, radius, soft) {
+      // Mask: schwarz = sichtbar, transparent = unsichtbar
+      const mask = `radial-gradient(circle ${radius}px at ${x}px ${y}px,
+        rgba(0,0,0,1) 0px,
+        rgba(0,0,0,1) ${Math.max(0, radius - soft)}px,
+        rgba(0,0,0,0) ${radius}px
+      )`;
+
+      yellow.style.webkitMaskImage = mask;
+      yellow.style.maskImage = mask;
+    }
+
+    function relPos(clientX, clientY) {
+      const r = scene.getBoundingClientRect();
+      return { x: clientX - r.left, y: clientY - r.top };
+    }
+
+    scene.addEventListener("mousemove", (e) => {
+      const { x, y } = relPos(e.clientX, e.clientY);
+      setMask(x, y, RADIUS, SOFT_EDGE);
     });
 
-    let hProgress = 0;
-    const floor2 = document.querySelector(".floor2");
+    scene.addEventListener("mouseenter", (e) => {
+      const { x, y } = relPos(e.clientX, e.clientY);
+      setMask(x, y, RADIUS, SOFT_EDGE);
+    });
 
-    function handleHorizontalScroll(e) {
-        // Verhindert das Standard-Scrollen der Seite, wenn wir das Panel verschieben
-        e.preventDefault();
-        // Wir verwenden deltaY, da vertikales Scrollen auf dem Mausrad 
-        // den horizontalen Effekt steuern soll.
-        const delta = e.deltaY * 0.0015;
+    scene.addEventListener("mouseleave", () => {
+      setMask(0, 0, 0, 0); // aus
+    });
 
-        hProgress += delta;
-        hProgress = Math.max(0, Math.min(1, hProgress)); // Werte zwischen 0 und 1
+    // Touch support
+    scene.addEventListener("touchmove", (e) => {
+      const t = e.touches[0];
+      const { x, y } = relPos(t.clientX, t.clientY);
+      setMask(x, y, RADIUS, SOFT_EDGE);
+      e.preventDefault();
+    }, { passive: false });
 
-        hScrollAnim.progress(hProgress);
-    }
-
-    // Erstellt einen ScrollTrigger, der den Event-Listener nur aktiviert/deaktiviert,
-    // wenn das 2. Stockwerk in Sicht kommt.
-    if (floor2) {
-        ScrollTrigger.create({
-            trigger: floor2,
-            start: "top bottom",
-            end: "bottom top",
-            onToggle: (self) => {
-                if (self.isActive) {
-                    // Aktiviert den Listener, wenn das Stockwerk sichtbar ist
-                    floor2.addEventListener("wheel", handleHorizontalScroll, {
-                        passive: false
-                    });
-                } else {
-                    // Deaktiviert den Listener, wenn das Stockwerk nicht mehr sichtbar ist
-                    floor2.removeEventListener("wheel", handleHorizontalScroll);
-                }
-            }
-        });
-    }
+    scene.addEventListener("touchend", () => {
+      setMask(0, 0, 0, 0);
+    });
+  });
 });
+
+
+var $headline = $('.headline'),
+    $inner = $('.inner'),
+    $nav = $('nav'),
+    navHeight = 75;
+
+$(window).scroll(function() {
+  var scrollTop = $(this).scrollTop(),
+      headlineHeight = $headline.outerHeight() - navHeight,
+      navOffset = $nav.offset().top;
+
+  $headline.css({
+    'opacity': (1 - scrollTop / headlineHeight)
+  });
+  $inner.children().css({
+    'transform': 'translateY('+ scrollTop * 0.4 +'px)'
+  });
+  if (navOffset > headlineHeight) {
+    $nav.addClass('scrolled');
+  } else {
+    $nav.removeClass('scrolled');
+  }
+});
+
+
+  

@@ -7,22 +7,10 @@
 html,
 body {
   height: 100%;
-  font-family: Arial, sans-serif;
+  font-family: Georgia, "Times New Roman", serif;
   overflow-x: hidden;
 }
 
-/* Intro */
-.intro {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #222;
-  color: #fff;
-  font-size: 3rem;
-  font-weight: bold;
-}
 
 /* Hochhaus Stockwerke */
 .floor {
@@ -64,6 +52,46 @@ body {
   /* Passt das Bild an, ohne das Verhältnis zu verzerren */
 }
 
+/* =========================
+   Taschenlampen-Effekt (nur für .flashlight-scene)
+========================= */
+
+.flashlight-scene {
+  position: relative;
+  overflow: hidden;
+  cursor: none;            /* optional: Mauszeiger weg */
+}
+
+.flashlight-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;       /* wie Background "cover" */
+  pointer-events: none;
+  user-select: none;
+}
+
+/* SW unten */
+.flashlight-bw {
+  z-index: 1;
+}
+
+/* Gelb oben, wird per Maske sichtbar */
+.flashlight-yellow {
+  z-index: 2;
+
+  /* Start: "aus" */
+  -webkit-mask-image: radial-gradient(circle 0px at 0 0, transparent 0, transparent 100%);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+
+  mask-image: radial-gradient(circle 0px at 0 0, transparent 0, transparent 100%);
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+}
+
+
 
 
 
@@ -88,59 +116,289 @@ body {
   background-color: #aaaaaa;
 }
 
-/* -------------------------------------- */
-/* 🔵 Horizontal Scroll Bereich in Stock 2 */
-/* -------------------------------------- */
-.floor2 {
-  position: relative;
-  overflow: hidden;
-  background-color: #e6e6e6;
-  /* Rand wie bei anderen Floors */
-  border-bottom: 2px solid #333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow-x: scroll;
-}
-
-/* Sichtbarer Innenbereich (Panels) */
 
 
-/* Horizontale Panels nebeneinander */
-.h-scroll {
+/* =========================
+   SLIDER (Grid + Transform)
+========================= */
+
+#slider {
   height: 80vh;
-  width: calc(100% * 3);
-  /* Platz für 3 Panels */
-  display: flex;
-}
-
-
-
-/* Panels */
-.panel {
   width: 80%;
-  height: auto;
-  aspect-ratio: 8 / 5;
-  background-color: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  color: white;
-  border: 2px dashed #666;
-  /* Optional wie bei Illustration */
+  position: relative;
+  padding: 0.5%;
+  background: rgba(38, 50, 56, 0.5);
+  overflow: hidden;
 }
 
-.panel1 {
-  background: #444;
+#slider input { display: none; }
+
+#slider .overflow {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
-/* dunkelgrau */
-.panel2 {
-  background: #123c7d;
+#slider .track {
+  height: 100%;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  transition: transform 0.8s cubic-bezier(0.770, 0.000, 0.175, 1.000);
+}
+
+/* statt margin-left -> transform */
+#slide1:checked ~ .slides .track { transform: translateX(0%); }
+#slide2:checked ~ .slides .track { transform: translateX(-100%); }
+#slide3:checked ~ .slides .track { transform: translateX(-200%); }
+
+#slider .slide {
+  height: 100%;
+  position: relative;
+}
+
+#slider .slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* ganzes Bild */
+  background: #111;
+  display: block;
+}
+
+/* Info */
+#slider .info {
+  position: absolute;
+  left: 50%;
+  top: 75%;
+  transform: translate(-50%, -50%);
+  padding: 20px 25px;
+  text-align: center;
+  font-style: italic;
+  font-size: 1rem;
+  color: #000;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+#slider .info h3 {
+  margin: 0 0 6px;
+  font-style: normal;
+  font-size: 1.5rem;
+  font-weight: normal;
+  color: #333;
+}
+
+/* Info nur beim aktiven Slide */
+#slide1:checked ~ .slides .slide:nth-child(1) .info,
+#slide2:checked ~ .slides .slide:nth-child(2) .info,
+#slide3:checked ~ .slides .slide:nth-child(3) .info {
+  opacity: 1;
+}
+
+/* Controls */
+#controls {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+#controls label {
+  pointer-events: auto;
+  display: none;
+  width: 9%;
+  padding-top: 9%;
+  border-top: 0.9vw solid #263238;
+  border-left: 0.9vw solid #263238;
+  opacity: 0.3;
+  transition: opacity 0.2s ease;
+}
+
+#controls label:hover { opacity: 0.8; cursor: pointer; }
+
+/* Right */
+#slide1:checked ~ #controls label:nth-child(2),
+#slide2:checked ~ #controls label:nth-child(3),
+#slide3:checked ~ #controls label:nth-child(1) {
+  display: block;
+  float: right;
+  transform: rotate(135deg);
+}
+
+/* Left */
+#slide1:checked ~ #controls label:nth-child(3),
+#slide2:checked ~ #controls label:nth-child(1),
+#slide3:checked ~ #controls label:nth-child(2) {
+  display: block;
+  float: left;
+  transform: rotate(-45deg);
+}
+
+/* Dots */
+#active {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+}
+
+#active label {
+  display: inline-block;
+  width: 3%;
+  padding-top: 3%;
+  margin: 1%;
+  border-radius: 50%;
+  background: rgba(38, 50, 56, 0.5);
+  transition: 0.2s;
+}
+
+#active label:hover {
+  background: rgba(38, 50, 56, 0.3);
+  box-shadow: 0 0 0 0.2vw #263238;
+  cursor: pointer;
+}
+
+#slide1:checked ~ #active label:nth-child(1),
+#slide2:checked ~ #active label:nth-child(2),
+#slide3:checked ~ #active label:nth-child(3) {
+  background: #263238;
+  box-shadow: 0 0 0 0.2vw #263238;
+}
+
+@media (max-width: 500px) {
+  #slider .info { opacity: 0 !important; }
+}
+/* ========================= */
+/* End Slider           */
+
+
+
+
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
+
+
+
+header {
+  background: #111;
+  height: 100vh;
+}
+
+/* ========================= */
+/* Headline                  */
+/* ========================= */
+
+.headline {
+  position: relative;
+  height: 100%;
+  color: #fff;
+  text-align: center;
+  background: url("haus.png");
+  background-repeat: repeat; 
+  background-size: auto;
+  background-position: 0 0;
+}
+
+.headline::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(17, 17, 17, 0.5);
+}
+
+/* ========================= */
+/* Inner Text                */
+/* ========================= */
+
+.inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+  animation: fade-in 0.75s 0.25s ease-in forwards;
+}
+
+.inner h1 {
+  margin: 0;
+  font-size: 4em;
+  line-height: 1.2em;
+}
+
+.inner p {
+  margin: 0;
+  font-size: 1.4em;
+  font-style: italic;
+  font-family: serif;
+}
+
+/* ========================= */
+/* Navigation                */
+/* ========================= */
+
+nav {
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+}
+
+nav.scrolled {
+  background: rgba(17, 17, 17, 0.9);
+}
+
+nav ul {
+  float: right;
+  list-style: none;
+  padding: 25px;
+  margin: 0;
+}
+
+nav li {
+  float: left;
+}
+
+nav a {
+  font-size: 0.9em;
+  color: #fff;
+  text-decoration: none;
+  margin: 5px 0 0 20px;
+  display: block;
+}
+
+nav a:hover {
+  color: #eeeeee; /* darken(#fff, 7%) */
 }
 
 
-.panel3 {
-  background: darkolivegreen;
+/* ========================= */
+/* Content Section           */
+/* ========================= */
+
+section {
+  width: 100%;
+  margin: 25px auto;
+  padding: 20px;
+  font-size: 1.2em;
+  line-height: 1.6em;
+  box-sizing: border-box;
+}
+
+/* ========================= */
+/* Animation                 */
+/* ========================= */
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
