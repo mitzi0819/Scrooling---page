@@ -92,15 +92,15 @@ body {
 /* 🔵 Horizontal Scroll Bereich in Stock 2 */
 /* -------------------------------------- */
 .floor2 {
-position: relative;
-overflow: hidden;
-background-color: #e6e6e6;
-/* Rand wie bei anderen Floors */
-border-bottom: 2px solid #333;
-display: flex;
-justify-content: center;
-align-items: center;
-overflow-x: scroll;
+  position: relative;
+  overflow: hidden;
+  background-color: #e6e6e6;
+  /* Rand wie bei anderen Floors */
+  border-bottom: 2px solid #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: scroll;
 }
 
 /* Sichtbarer Innenbereich (Panels) */
@@ -108,39 +108,39 @@ overflow-x: scroll;
 
 /* Horizontale Panels nebeneinander */
 .h-scroll {
-height: 80vh;
-width: calc(100% * 3);
-/* Platz für 3 Panels */
-display: flex;
+  height: 80vh;
+  width: calc(100% * 3);
+  /* Platz für 3 Panels */
+  display: flex;
 }
 
 
 
 /* Panels */
 .panel {
-width: 80%;
-height: auto;
-aspect-ratio: 8 / 5;
-background-color: transparent;
-display: flex;
-justify-content: center;
-align-items: center;
-font-size: 2rem;
-color: white;
-border: 2px dashed #666;
-/* Optional wie bei Illustration */
+  width: 80%;
+  height: auto;
+  aspect-ratio: 8 / 5;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  color: white;
+  border: 2px dashed #666;
+  /* Optional wie bei Illustration */
 }
 
 .panel1 {
-background: #444;
+  background: #444;
 }
 
 /* dunkelgrau */
 .panel2 {
-background: #123c7d;
+  background: #123c7d;
 }
 
 
 .panel3 {
-background: darkolivegreen;
+  background: darkolivegreen;
 }

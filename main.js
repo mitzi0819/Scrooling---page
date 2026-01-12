@@ -2,11 +2,11 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 // 1️⃣ Warten, bis das DOM vollständig geladen ist
 document.addEventListener("DOMContentLoaded", () => {
-    
+
     // Sicherstellen, dass die Seite ganz oben beginnt, bevor GSAP die Kontrolle übernimmt.
     window.scrollTo(0, 0);
 
-    
+
     // ----------------------------------------
     // Fade-in Animation für alle Stockwerke
     // ----------------------------------------
@@ -38,21 +38,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     let hProgress = 0;
-    const floor2 = document.querySelector(".floor2"); 
+    const floor2 = document.querySelector(".floor2");
 
     function handleHorizontalScroll(e) {
         // Verhindert das Standard-Scrollen der Seite, wenn wir das Panel verschieben
-        e.preventDefault(); 
+        e.preventDefault();
         // Wir verwenden deltaY, da vertikales Scrollen auf dem Mausrad 
         // den horizontalen Effekt steuern soll.
-        const delta = e.deltaY * 0.0015; 
-        
+        const delta = e.deltaY * 0.0015;
+
         hProgress += delta;
         hProgress = Math.max(0, Math.min(1, hProgress)); // Werte zwischen 0 und 1
-        
+
         hScrollAnim.progress(hProgress);
     }
-    
+
     // Erstellt einen ScrollTrigger, der den Event-Listener nur aktiviert/deaktiviert,
     // wenn das 2. Stockwerk in Sicht kommt.
     if (floor2) {
