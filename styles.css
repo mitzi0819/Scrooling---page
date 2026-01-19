@@ -299,31 +299,40 @@ body {
 
 
 /* ===== Floor 2: Verdächtiger Overlay + Slide-In ===== */
-#slider .slide{
+/* Szene ist der "Raum" Container */
+#slider .slide .scene{
   position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* damit Person außerhalb nicht sichtbar ist */
 }
 
+/* Raum-Bild */
 #slider .slide .room{
   width: 100%;
   height: 100%;
   object-fit: contain;
   display: block;
-  cursor: pointer; /* zeigt: man kann klicken */
+  cursor: pointer;
 }
 
-/* Verdächtiger steht "im Raum" */
+/* Person als Overlay im selben Container */
 #slider .slide .suspect{
   position: absolute;
   bottom: 0;
-  left: 62%;              /* wo er stehen soll (anpassen) */
-  height: 88%;            /* Größe (anpassen) */
+  left: 62%;
+  height: 88%;
   width: auto;
-  z-index: 3;
-  pointer-events: none;   /* Klick bleibt auf dem Raum-Bild */
-  transform: translateX(120%); /* Start: rechts außerhalb */
+  z-index: 4;
+  pointer-events: none;
+
+  transform: translateX(120%);
   opacity: 0;
-  will-change: transform, opacity;
 }
+
+/* damit Klick nicht blockiert wird */
+#slider .info{ pointer-events:none; }
+
 
 /* ========================= */
 /* End Slider           */
@@ -641,42 +650,4 @@ section {
 
 /* ===== Floor 4 Gallery (scoped) ===== */
 /* Floor 4: Horizontal Gallery */
-.floor4 .gallery-floor{
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-
-.floor4 .hgallery{
-  width: 100%;
-  height: 100%;
-  display: flex;
-  gap: 24px;
-  padding: 24px;
-
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-
-  /* Optional: Mausrad fühlt sich besser an */
-  scrollbar-width: thin;
-}
-
-.floor4 .hgallery::-webkit-scrollbar{
-  height: 10px;
-}
-
-.floor4 .card{
-  flex: 0 0 auto;
-  width: min(320px, 70vw);
-  aspect-ratio: 9 / 16;
-  border-radius: 14px;
-
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-
-  scroll-snap-align: center;
-}
+/* ===== Floor 4: Carousel (immer 3 sichtbar, Loop) ===== *
