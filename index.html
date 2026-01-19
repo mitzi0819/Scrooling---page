@@ -1,147 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hochhaus</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hochhaus</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-
-
-    <header>
-        <div class="headline">
-            <div class="inner">
-                <h1>Willkommen im Hochhaus</h1>
-                <p>Scroll down the page</p>
-            </div>
-        </div>
-    </header>
-
-    <div class="building">
-
-        <section class="floor floor1">
-
-            <nav role="navigation">
-                <div id="menuToggle">
-                    <input type="checkbox" id="menuCheckbox" />
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <ul id="menu">
-                        text text text
-                    </ul>
-                </div>
-            </nav>
-
-            <div class="illustration">1. Stockwerk (Oberstes)
-                <img src="pngs/dachboden-sw.png" alt="">
-            </div>
-        </section>
-
-
-        <section class="floor floor2">
-            <nav role="navigation">
-                                    <div id="menuToggle">
-                                        <input type="checkbox" id="menuCheckbox" />
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                        <ul id="menu">
-                                            text text text
-                                        </ul>
-                                    </div>
-                                </nav>
-            <div id="slider">
-                <!-- Slider Setup -->
-                <input type="radio" name="slider" id="slide1" checked />
-                <input type="radio" name="slider" id="slide2" />
-                <input type="radio" name="slider" id="slide3" />
-
-
-                <!-- The Slider -->
-                <div class="slides">
-                    <div class="overflow">
-                        <div class="track">
-                            <div class="slide">
-                                <div class="info">
-                                    <h3>Verdächtiger 1</h3>
-                                </div>
-                                
-                                <img src="pngs/verdächtige1_person-raum.png" />
-                            </div>
-                            <div class="slide">
-                                <div class="info">
-                                    <h3>Verdächtiger 2</h3>
-                                </div>
-                               
-                                <img src="pngs/verdächtige2_person-raum.png" />
-                            </div>
-                            <div class="slide">
-                                <div class="info">
-                                    <h3>Verdächtiger 3</h3>
-                                </div>
-                              
-                                <img src="pngs/verdächtige3_person-raum.png" />
-                            </div>
-
-                        </div> <!-- .inner -->
-                    </div> <!-- #overflow -->
-                </div> <!-- #slides -->
-
-                <!-- Controls and Active Slide Display -->
-                <div id="controls">
-                    <label for="slide1"></label>
-                    <label for="slide2"></label>
-                    <label for="slide3"></label>
-
-                </div> <!-- #controls -->
-
-                <div id="active">
-                    <label for="slide1"></label>
-                    <label for="slide2"></label>
-                    <label for="slide3"></label>
-
-                </div> <!-- #active -->
-            </div> <!-- #slider -->
-        </section>
-
-        <!-- Kommentar -->
-
-        </section>
-
-        <section class="floor floor3">
-            <div class="illustration flashlight-scene">
-                <!-- unten: schwarz/weiß -->
-                <img class="flashlight-layer flashlight-bw" src="pngs/dachboden-sw.png" alt="Tatort SW"
-                    draggable="false">
-
-                <!-- oben: gelb (wird maskiert) -->
-                <img class="flashlight-layer flashlight-yellow" src="pngs/dachboden-f2.png" alt="Tatort Gelb"
-                    draggable="false">
-            </div>
-        </section>
-
-
-        <section class="floor floor4">
-            <div class="illustration">4. Stockwerk</div>
-        </section>
-
-        <section class="floor floor5">
-            <div class="illustration">5. Stockwerk (Unterstes)</div>
-        </section>
-
+  <header>
+    <div class="headline">
+      <div class="inner">
+        <h1>Willkommen im Hochhaus</h1>
+        <p>Scroll down the page</p>
+      </div>
+      <div class="scroll-hint">↓ Scroll</div>
     </div>
+  </header>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollToPlugin.min.js"></script>
-    <script src="main.js"></script>
+  <div class="building">
 
+    <section id="floor1Id" class="floor floor1">
+      <nav role="navigation">
+        <div id="menuToggle">
+          <input type="checkbox" id="menuCheckbox" />
+          <span></span><span></span><span></span>
+          <ul id="menu">text text text</ul>
+        </div>
+      </nav>
 
+      <div class="illustration">
+        1. Stockwerk (Oberstes)
+        <button id="scrollBtn">↓</button>
+        <img src="pngs-neu/dachboden-sw.png" alt="">
+      </div>
+    </section>
 
+    <!-- FLOOR 2 -->
+    <section id="floor2Id" class="floor floor2">
+      <nav role="navigation">
+        <div id="menuToggle">
+          <input type="checkbox" id="menuCheckbox" />
+          <span></span><span></span><span></span>
+          <ul id="menu">text text text</ul>
+        </div>
+      </nav>
+
+      <div id="slider">
+        <!-- Slider Setup -->
+        <input type="radio" name="slider" id="slide1" checked />
+        <input type="radio" name="slider" id="slide2" />
+        <input type="radio" name="slider" id="slide3" />
+
+        <div class="slides">
+          <div class="overflow">
+            <div class="track">
+
+              <!-- SLIDE 1 -->
+              <div class="slide">
+                <div class="info"><h3>Verdächtiger 1</h3></div>
+
+                <img class="room" src="pngs-neu/werkstatt.png" alt="Werkstatt" />
+                <img class="suspect" src="pngs/verdächtige1_person.png" alt="Verdächtiger 1" />
+              </div>
+
+              <!-- SLIDE 2 -->
+              <div class="slide">
+                <div class="info"><h3>Verdächtiger 2</h3></div>
+
+                <img class="room" src="pngs-neu/büro.png" alt="Büro" />
+                <img class="suspect" src="pngs/verdächtige2_person.png" alt="Verdächtiger 2" />
+              </div>
+
+              <!-- SLIDE 3 -->
+              <div class="slide">
+                <div class="info"><h3>Verdächtiger 3</h3></div>
+
+                <img class="room" src="pngs-neu/abstellkammer.png" alt="Abstellkammer" />
+                <img class="suspect" src="pngs/verdächtige3_person.png" alt="Verdächtiger 3" />
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div id="controls">
+          <label for="slide1"></label>
+          <label for="slide2"></label>
+          <label for="slide3"></label>
+        </div>
+
+        <div id="active">
+          <label for="slide1"></label>
+          <label for="slide2"></label>
+          <label for="slide3"></label>
+        </div>
+      </div>
+    </section>
+
+    <section class="floor floor3">
+      <div class="illustration flashlight-scene">
+        <img class="flashlight-layer flashlight-bw" src="pngs-neu/dachboden-sw.png" alt="Tatort SW" draggable="false">
+        <img class="flashlight-layer flashlight-yellow" src="pngs-neu/dachboden-gelb.png" alt="Tatort Gelb" draggable="false">
+      </div>
+    </section>
+
+    <section id="floor4Id" class="floor floor4">
+      <div class="illustration gallery-floor">
+        <div class="hgallery" aria-label="Galerie horizontal">
+          <div class="card" style="background-image:url('pngs/verdächtige1_person.png')"></div>
+          <div class="card" style="background-image:url('pngs/verdächtige2_person.png')"></div>
+          <div class="card" style="background-image:url('pngs/verdächtige3_person.png')"></div>
+          <div class="card" style="background-image:url('pngs/verdächtige4_person.png')"></div>
+          <div class="card" style="background-image:url('pngs/verdächtige5_person.png')"></div>
+          <div class="card" style="background-image:url('pngs/verdächtige6_person.png')"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="floor floor5">
+      <div class="illustration">5. Stockwerk (Unterstes)</div>
+    </section>
+
+  </div>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollToPlugin.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Draggable.min.js"></script>
+
+  <!-- dein Script NUR EINMAL -->
+  <script src="main.js"></script>
 </body>
-
 </html>

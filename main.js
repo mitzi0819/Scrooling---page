@@ -1,111 +1,97 @@
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Draggable);
 
-// 1️⃣ Warten, bis das DOM vollständig geladen ist
+// Auto-Scroll zu Floor1 (min. 3 Sekunden)
+const pageStart = performance.now();
+window.scrollTo(0, 0);
+
+window.addEventListener("load", () => {
+  const elapsed = performance.now() - pageStart;
+  const remaining = Math.max(0, 3000 - elapsed);
+
+  setTimeout(() => {
+    const target = document.querySelector("#floor1Id");
+    if (!target) return;
+
+    gsap.to(window, {
+      duration: 1.4,
+      ease: "power2.inOut",
+      scrollTo: { y: target, offsetY: 0, autoKill: false },
+      onComplete: () => ScrollTrigger.refresh()
+    });
+  }, remaining);
+});
+
 document.addEventListener("DOMContentLoaded", () => {
 
-    // Sicherstellen, dass die Seite ganz oben beginnt, bevor GSAP die Kontrolle übernimmt.
-    window.scrollTo(0, 0);
-
-
-    // ----------------------------------------
-    // Fade-in Animation für alle Stockwerke
-    // ----------------------------------------
-    gsap.utils.toArray(".floor").forEach((floor) => {
-        gsap.fromTo(
-            floor,
-            { opacity: 0, y: 50 },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: floor,
-                    start: "top 80%", // Startet, wenn 80% des Viewports erreicht sind
-                    toggleActions: "play none none none"
-                }
-            }
-        );
-    });
-
-    // ----------------------------------------
-  // Taschenlampen-Effekt (nur in .flashlight-scene)
-  // ----------------------------------------
-  const RADIUS = 160;     // Größe des Lichtkreises
-  const SOFT_EDGE = 70;   // Weicher Rand
-
-  document.querySelectorAll(".flashlight-scene").forEach(scene => {
-    const yellow = scene.querySelector(".flashlight-yellow");
-    if (!yellow) return;
-
-    function setMask(x, y, radius, soft) {
-      // Mask: schwarz = sichtbar, transparent = unsichtbar
-      const mask = `radial-gradient(circle ${radius}px at ${x}px ${y}px,
-        rgba(0,0,0,1) 0px,
-        rgba(0,0,0,1) ${Math.max(0, radius - soft)}px,
-        rgba(0,0,0,0) ${radius}px
-      )`;
-
-      yellow.style.webkitMaskImage = mask;
-      yellow.style.maskImage = mask;
-    }
-
-    function relPos(clientX, clientY) {
-      const r = scene.getBoundingClientRect();
-      return { x: clientX - r.left, y: clientY - r.top };
-    }
-
-    scene.addEventListener("mousemove", (e) => {
-      const { x, y } = relPos(e.clientX, e.clientY);
-      setMask(x, y, RADIUS, SOFT_EDGE);
-    });
-
-    scene.addEventListener("mouseenter", (e) => {
-      const { x, y } = relPos(e.clientX, e.clientY);
-      setMask(x, y, RADIUS, SOFT_EDGE);
-    });
-
-    scene.addEventListener("mouseleave", () => {
-      setMask(0, 0, 0, 0); // aus
-    });
-
-    // Touch support
-    scene.addEventListener("touchmove", (e) => {
-      const t = e.touches[0];
-      const { x, y } = relPos(t.clientX, t.clientY);
-      setMask(x, y, RADIUS, SOFT_EDGE);
-      e.preventDefault();
-    }, { passive: false });
-
-    scene.addEventListener("touchend", () => {
-      setMask(0, 0, 0, 0);
-    });
+  // Fade in Floors
+  gsap.utils.toArray(".floor").forEach((floor) => {
+    gsap.fromTo(
+      floor,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: floor,
+          start: "top 80%",
+          toggleActions: "play none none none"
+        }
+      }
+    );
   });
-});
 
-
-var $headline = $('.headline'),
-    $inner = $('.inner'),
-    $nav = $('nav'),
-    navHeight = 75;
-
-$(window).scroll(function() {
-  var scrollTop = $(this).scrollTop(),
-      headlineHeight = $headline.outerHeight() - navHeight,
-      navOffset = $nav.offset().top;
-
-  $headline.css({
-    'opacity': (1 - scrollTop / headlineHeight)
-  });
-  $inner.children().css({
-    'transform': 'translateY('+ scrollTop * 0.4 +'px)'
-  });
-  if (navOffset > headlineHeight) {
-    $nav.addClass('scrolled');
-  } else {
-    $nav.removeClass('scrolled');
+  // Button Floor1 -> Floor2
+  const btn = document.getElementById("scrollBtn");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      document.getElementById("floor2Id")?.scrollIntoView({ behavior: "smooth" });
+    });
   }
+
+  // ===== Floor2: Klick auf Raum -> Person rein/raus =====
+  const slides = document.querySelectorAll("#floor2Id #slider .slide");
+
+  slides.forEach((slide) => {
+    const room = slide.querySelector("img.room");
+    const suspect = slide.querySelector("img.suspect");
+    if (!room || !suspect) return;
+
+    gsap.set(suspect, { xPercent: 120, autoAlpha: 0 });
+
+    room.addEventListener("click", () => {
+      const isIn = slide.classList.contains("suspect-in");
+
+      if (isIn) {
+        gsap.to(suspect, {
+          xPercent: 120,
+          autoAlpha: 0,
+          duration: 0.6,
+          ease: "power2.inOut"
+        });
+        slide.classList.remove("suspect-in");
+      } else {
+        gsap.to(suspect, {
+          xPercent: 0,
+          autoAlpha: 1,
+          duration: 0.8,
+          ease: "power3.out"
+        });
+        slide.classList.add("suspect-in");
+      }
+    });
+  });
+
+  // Optional: Beim Slide-Wechsel Person wieder raus
+  document.querySelectorAll('#floor2Id #slider input[name="slider"]').forEach((radio) => {
+    radio.addEventListener("change", () => {
+      slides.forEach((slide) => {
+        slide.classList.remove("suspect-in");
+        const suspect = slide.querySelector("img.suspect");
+        if (suspect) gsap.set(suspect, { xPercent: 120, autoAlpha: 0 });
+      });
+    });
+  });
+
 });
-
-
-  
