@@ -11,7 +11,6 @@ body {
   overflow-x: hidden;
 }
 
-
 /* Hochhaus Stockwerke */
 .floor {
   width: 100%;
@@ -19,26 +18,19 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  border-bottom: 2px solid #333;
   position: relative;
   opacity: 0;
-
-  background:
-    linear-gradient(
-      rgba(0,0,0,0.65),
-      rgba(0,0,0,0.85)
-    ),
-    url("haus.png");
-
+  /* Start unsichtbar für Fade-in Animation */
+  background-image: url("haus.png");
   background-repeat: repeat;
+  /* Kacheln */
   background-size: auto;
+  /* Originalgröße */
   background-position: 0 0;
 }
 
-
-
-
 /* Platzhalter Illustration für normale Stockwerke */
-
 .illustration {
   width: 80%;
   height: 80vh;
@@ -46,9 +38,7 @@ body {
   background-color: transparent;
 }
 
-
 /* Optional: Wenn Sie das Bild als echtes <img>-Tag einfügen: */
-
 .illustration img {
   width: 100%;
   height: 100%;
@@ -56,14 +46,12 @@ body {
   /* Passt das Bild an, ohne das Verhältnis zu verzerren */
 }
 
-/* =========================
-   Taschenlampen-Effekt (nur für .flashlight-scene)
-========================= */
-
+/* ========================= Taschenlampen-Effekt (nur für .flashlight-scene) ========================= */
 .flashlight-scene {
   position: relative;
   overflow: hidden;
-  cursor: none;            /* optional: Mauszeiger weg */
+  cursor: none;
+  /* optional: Mauszeiger weg */
 }
 
 .flashlight-layer {
@@ -71,7 +59,8 @@ body {
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;       /* wie Background "cover" */
+  object-fit: cover;
+  /* wie Background "cover" */
   pointer-events: none;
   user-select: none;
 }
@@ -84,20 +73,14 @@ body {
 /* Gelb oben, wird per Maske sichtbar */
 .flashlight-yellow {
   z-index: 2;
-
   /* Start: "aus" */
   -webkit-mask-image: radial-gradient(circle 0px at 0 0, transparent 0, transparent 100%);
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-size: 100% 100%;
-
   mask-image: radial-gradient(circle 0px at 0 0, transparent 0, transparent 100%);
   mask-repeat: no-repeat;
   mask-size: 100% 100%;
 }
-
-
-
-
 
 /* Farben zur Orientierung */
 .floor1 {
@@ -120,12 +103,7 @@ body {
   background-color: #aaaaaa;
 }
 
-
-
-/* =========================
-   SLIDER (Grid + Transform)
-========================= */
-
+/* ========================= SLIDER (Grid + Transform) ========================= */
 #slider {
   height: 80vh;
   width: 80%;
@@ -135,7 +113,9 @@ body {
   overflow: hidden;
 }
 
-#slider input { display: none; }
+#slider input {
+  display: none;
+}
 
 #slider .overflow {
   width: 100%;
@@ -152,40 +132,31 @@ body {
 }
 
 /* statt margin-left -> transform */
-#slide1:checked ~ .slides .track { transform: translateX(0%); }
-#slide2:checked ~ .slides .track { transform: translateX(-100%); }
-#slide3:checked ~ .slides .track { transform: translateX(-200%); }
+#slide1:checked~.slides .track {
+  transform: translateX(0%);
+}
+
+#slide2:checked~.slides .track {
+  transform: translateX(-100%);
+}
+
+#slide3:checked~.slides .track {
+  transform: translateX(-200%);
+}
 
 #slider .slide {
   height: 100%;
   position: relative;
 }
 
-/* Nur der Raum füllt den Slide */
-#slider .slide .room{
+#slider .slide img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  /* ganzes Bild */
   background: #111;
   display: block;
-  cursor: pointer;
 }
-
-/* Die Person ist ein Overlay */
-#slider .slide .suspect{
-  position: absolute;
-  bottom: 0;
-  left: 62%;      /* Position im Raum */
-  height: 88%;    /* Größe */
-  width: auto;
-
-  z-index: 4;
-  pointer-events: none;
-
-  transform: translateX(120%); /* Start rechts außerhalb */
-  opacity: 0;
-}
-
 
 /* Info */
 #slider .info {
@@ -200,8 +171,6 @@ body {
   color: #000;
   opacity: 0;
   transition: opacity 0.6s ease;
-  pointer-events: none; 
-
 }
 
 #slider .info h3 {
@@ -213,9 +182,9 @@ body {
 }
 
 /* Info nur beim aktiven Slide */
-#slide1:checked ~ .slides .slide:nth-child(1) .info,
-#slide2:checked ~ .slides .slide:nth-child(2) .info,
-#slide3:checked ~ .slides .slide:nth-child(3) .info {
+#slide1:checked~.slides .slide:nth-child(1) .info,
+#slide2:checked~.slides .slide:nth-child(2) .info,
+#slide3:checked~.slides .slide:nth-child(3) .info {
   opacity: 1;
 }
 
@@ -240,21 +209,24 @@ body {
   transition: opacity 0.2s ease;
 }
 
-#controls label:hover { opacity: 0.8; cursor: pointer; }
+#controls label:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
 
 /* Right */
-#slide1:checked ~ #controls label:nth-child(2),
-#slide2:checked ~ #controls label:nth-child(3),
-#slide3:checked ~ #controls label:nth-child(1) {
+#slide1:checked~#controls label:nth-child(2),
+#slide2:checked~#controls label:nth-child(3),
+#slide3:checked~#controls label:nth-child(1) {
   display: block;
   float: right;
   transform: rotate(135deg);
 }
 
 /* Left */
-#slide1:checked ~ #controls label:nth-child(3),
-#slide2:checked ~ #controls label:nth-child(1),
-#slide3:checked ~ #controls label:nth-child(2) {
+#slide1:checked~#controls label:nth-child(3),
+#slide2:checked~#controls label:nth-child(1),
+#slide3:checked~#controls label:nth-child(2) {
   display: block;
   float: left;
   transform: rotate(-45deg);
@@ -286,63 +258,22 @@ body {
   cursor: pointer;
 }
 
-#slide1:checked ~ #active label:nth-child(1),
-#slide2:checked ~ #active label:nth-child(2),
-#slide3:checked ~ #active label:nth-child(3) {
+#slide1:checked~#active label:nth-child(1),
+#slide2:checked~#active label:nth-child(2),
+#slide3:checked~#active label:nth-child(3) {
   background: #263238;
   box-shadow: 0 0 0 0.2vw #263238;
 }
 
 @media (max-width: 500px) {
-  #slider .info { opacity: 0 !important; }
+  #slider .info {
+    opacity: 0 !important;
+  }
 }
-
-
-/* ===== Floor 2: Verdächtiger Overlay + Slide-In ===== */
-/* Szene ist der "Raum" Container */
-#slider .slide .scene{
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden; /* damit Person außerhalb nicht sichtbar ist */
-}
-
-/* Raum-Bild */
-#slider .slide .room{
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-  cursor: pointer;
-}
-
-/* Person als Overlay im selben Container */
-#slider .slide .suspect{
-  position: absolute;
-  bottom: 0;
-  left: 62%;
-  height: 88%;
-  width: auto;
-  z-index: 4;
-  pointer-events: none;
-
-  transform: translateX(120%);
-  opacity: 0;
-}
-
-/* damit Klick nicht blockiert wird */
-#slider .info{ pointer-events:none; }
-
 
 /* ========================= */
-/* End Slider           */
-
-
-
-
+/* End Slider */
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
-
-
 
 header {
   background: #111;
@@ -350,27 +281,18 @@ header {
 }
 
 /* ========================= */
-/* Headline                  */
+/* Headline */
 /* ========================= */
-
 .headline {
   position: relative;
   height: 100%;
   color: #fff;
   text-align: center;
-
-  background:
-    linear-gradient(
-      rgba(0,0,0,0.65),
-      rgba(0,0,0,0.85)
-    ),
-    url("haus.png");
-
+  background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.85)), url("haus.png");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
 }
-
 
 .headline::after {
   position: absolute;
@@ -383,9 +305,8 @@ header {
 }
 
 /* ========================= */
-/* Inner Text                */
+/* Inner Text */
 /* ========================= */
-
 .inner {
   position: absolute;
   top: 50%;
@@ -403,7 +324,6 @@ header {
   font-weight: 400;
 }
 
-
 .inner p {
   margin-top: 15px;
   font-size: 1.2rem;
@@ -411,11 +331,9 @@ header {
   opacity: 0.85;
 }
 
-
 /* ========================= */
-/* Navigation                */
+/* Navigation */
 /* ========================= */
-
 nav {
   position: fixed;
   width: 100%;
@@ -446,14 +364,13 @@ nav a {
 }
 
 nav a:hover {
-  color: #eeeeee; /* darken(#fff, 7%) */
+  color: #eeeeee;
+  /* darken(#fff, 7%) */
 }
 
-
 /* ========================= */
-/* Content Section           */
+/* Content Section */
 /* ========================= */
-
 section {
   width: 100%;
   margin: 25px auto;
@@ -464,134 +381,97 @@ section {
 }
 
 /* ========================= */
-/* Animation                 */
+/* Animation */
 /* ========================= */
-
 @keyframes fade-in {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
 }
 
-
-
 /* Menu code starts here */
-
-#menuToggle
-{
+#menuToggle {
   display: block;
   /* You can also use relative/absolute here if you want to stay on the top */
   position: fixed;
   top: 50px;
   left: 50px;
-  
   z-index: 1;
-  
   -webkit-user-select: none;
   user-select: none;
 }
 
-#menuToggle a
-{
+#menuToggle a {
   text-decoration: none;
   color: #232323;
-  
   transition: color 0.3s ease;
 }
 
-#menuToggle a:hover
-{
+#menuToggle a:hover {
   color: tomato;
 }
 
-
-#menuToggle input
-{
+#menuToggle input {
   display: block;
   width: 40px;
   height: 32px;
   position: absolute;
   top: -7px;
   left: -5px;
-  
   cursor: pointer;
-  
-  opacity: 0; /* hide this */
-  z-index: 2; /* and place it over the hamburger */
-  
+  opacity: 0;
+  /* hide this */
+  z-index: 2;
+  /* and place it over the hamburger */
   -webkit-touch-callout: none;
 }
 
-/*
- * Just a quick hamburger
- */
-#menuToggle span
-{
+/* * Just a quick hamburger */
+#menuToggle span {
   display: block;
   width: 33px;
   height: 4px;
   margin-bottom: 5px;
   position: relative;
-  
   background: #cdcdcd;
   border-radius: 3px;
-  
   z-index: 1;
-  
   transform-origin: 4px 0px;
-  
-  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
-              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
-              opacity 0.55s ease;
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0), background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0), opacity 0.55s ease;
 }
 
-#menuToggle span:first-child
-{
+#menuToggle span:first-child {
   transform-origin: 0% 0%;
 }
 
-#menuToggle span:nth-last-child(2)
-{
+#menuToggle span:nth-last-child(2) {
   transform-origin: 0% 100%;
 }
 
-/* 
- * Transform all the slices of hamburger
- * into a crossmark.
- */
-#menuToggle input:checked ~ span
-{
+/* * Transform all the slices of hamburger * into a crossmark. */
+#menuToggle input:checked~span {
   opacity: 1;
   transform: rotate(45deg) translate(-2px, -1px);
   background: #232323;
 }
 
-/*
- * But let's hide the middle one.
- */
-#menuToggle input:checked ~ span:nth-last-child(3)
-{
+/* * But let's hide the middle one. */
+#menuToggle input:checked~span:nth-last-child(3) {
   opacity: 0;
   transform: rotate(0deg) scale(0.2, 0.2);
 }
 
-/*
- * Ohyeah and the last one should go the other direction
- */
-#menuToggle input:checked ~ span:nth-last-child(2)
-{
+/* * Ohyeah and the last one should go the other direction */
+#menuToggle input:checked~span:nth-last-child(2) {
   transform: rotate(-45deg) translate(0, -1px);
 }
 
-/*
- * Make this absolute positioned
- * at the top left of the screen
- */
-#menu
-{
+/* * Make this absolute positioned * at the top left of the screen */
+#menu {
   position: absolute;
   max-width: 400px;
   width: 100vw;
@@ -605,29 +485,22 @@ section {
   list-style-type: none;
   -webkit-font-smoothing: antialiased;
   /* to stop flickering of text in safari */
-  
   transform-origin: 0% 0%;
   transform: translate(-100%, 0);
-  
-  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
 }
 
-#menu li
-{
+#menu li {
   padding: 10px 0;
   font-size: 22px;
 }
 
-#menu li label
-{
+#menu li label {
   cursor: pointer;
 }
 
-/*
- * And let's slide it in from the left
- */
-#menuToggle input:checked ~ ul
-{
+/* * And let's slide it in from the left */
+#menuToggle input:checked~ul {
   transform: none;
 }
 
@@ -643,11 +516,236 @@ section {
 }
 
 @keyframes pulse {
-  0%,100% { opacity: 0.4; }
-  50% { opacity: 0.9; }
+
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
 }
 
 
-/* ===== Floor 4 Gallery (scoped) ===== */
-/* Floor 4: Horizontal Gallery */
-/* ===== Floor 4: Carousel (immer 3 sichtbar, Loop) ===== *
+
+/* =========================
+   DEMO LAYER (Carousel)
+========================= */
+@layer demo {
+  .carousel {
+    /* prev & next buttons */
+    --nav-btn-size: 40px;
+    --nav-btn-bg: rgb(15, 23, 43);
+    --nav-btn-txt: white;
+
+    /* item markers */
+    --nav-marker-size: 20px;
+    --nav-marker-bg: rgb(15, 23, 43);
+
+    width: min(calc(100% - 2rem), 700px);
+    padding-block: 2rem;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 250px;
+    gap: 0;
+
+    anchor-name: --carousel;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+
+    /* FIX: correct spelling */
+    overscroll-behavior-x: contain;
+
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+
+    /* push first and last items to middle */
+    &::before,
+    &::after {
+      content: "";
+    }
+
+    /**************** MARKERS GROUP *******************/
+    scroll-marker-group: after;
+
+    &::scroll-marker-group {
+      position: absolute;
+      position-anchor: --carousel;
+      inline-size: min(90cqi, 400px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      justify-self: center;
+      gap: 0.25rem;
+      padding-block-start: 1rem;
+      top: anchor(bottom);
+      left: calc(anchor(left) - 10%);
+      right: calc(anchor(right) - 10%);
+    }
+
+    /* carousel item */
+    > div {
+      position: relative;
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+
+      /* define container for child animations */
+      container-type: scroll-state;
+
+      display: grid;
+      grid-template-areas: "img" "title" "desc";
+      text-align: center;
+
+      /* scroll to this item on load */
+      &.scroll-start {
+        scroll-initial-target: nearest;
+      }
+
+      > h2 {
+        grid-area: title;
+        margin: 1rem 0 0 0;
+        font-size: 1.3rem;
+        white-space: nowrap;
+        transition: all 300ms ease-in-out;
+
+        @container not scroll-state(snapped: inline) {
+          scale: 0.5;
+          opacity: 0.5;
+          translate: 0 -100px;
+        }
+      }
+
+      > p {
+        grid-area: desc;
+        margin: 0;
+        white-space: nowrap;
+        transition: all 300ms ease-in-out;
+
+        @container not scroll-state(snapped: inline) {
+          scale: 0.5;
+          opacity: 0;
+        }
+      }
+
+      > .img {
+        grid-area: img;
+        width: 100%;
+        aspect-ratio: 3/4;
+        transition: all 300ms ease-in-out;
+        transform-origin: center center;
+
+        @container not scroll-state(snapped: inline) {
+          scale: 0.5;
+          opacity: 0.5;
+        }
+
+        & > img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 20px;
+          box-shadow: 0 10px 20px rgba(0 0 0 / 0.25);
+        }
+      }
+
+      /************** MARKERS **************/
+      &::scroll-marker {
+        content: " ";
+        height: var(--nav-marker-size);
+        aspect-ratio: 1;
+        background-color: var(--nav-marker-bg);
+        border-radius: 50%;
+        transition: 150ms ease-in-out;
+        scale: 0.75;
+        opacity: 0.25;
+      }
+
+      &::scroll-marker:target-current {
+        opacity: 1;
+        scale: 1;
+      }
+
+      &::scroll-marker:where(:hover, :focus-visible) {
+        opacity: 1;
+      }
+
+      &::scroll-marker:focus-visible {
+        outline: 1px dashed var(--nav-marker-bg);
+        outline-offset: 4px;
+      }
+    }
+
+    /************* NAV BUTTONS ************/
+    &::scroll-button(*) {
+      position: absolute;
+      position-anchor: --carousel;
+      width: var(--nav-btn-size);
+      aspect-ratio: 1/1;
+      font: inherit;
+      background-color: var(--nav-btn-bg);
+      display: grid;
+      place-content: center;
+      color: var(--nav-btn-txt);
+      border: none;
+      border-radius: 50%;
+      opacity: 0.7;
+      cursor: pointer;
+      transition: all 150ms ease-in-out;
+      outline: 1px dashed transparent;
+      outline-offset: 0px;
+    }
+
+    &::scroll-button(inline-start) {
+      content: "❮";
+      left: calc(anchor(left) - var(--nav-btn-size));
+    }
+
+    &::scroll-button(inline-end) {
+      content: "❯";
+      right: calc(anchor(right) - var(--nav-btn-size));
+    }
+
+    &::scroll-button(*):not(:disabled):where(:hover, :focus-visible) {
+      opacity: 1;
+      scale: 1.1;
+    }
+
+    &::scroll-button(*):focus-visible {
+      outline: 1px dashed var(--nav-btn-bg);
+      outline-offset: 4px;
+    }
+
+    &::scroll-button(*):disabled {
+      opacity: 0.25;
+      cursor: unset;
+    }
+  }
+}
+
+/* =========================
+   BASE LAYER (General)
+========================= */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  :root {
+    color-scheme: light dark;
+    --bg-dark: rgb(16, 24, 40);
+    --bg-light: rgb(248, 244, 238);
+    --txt-light: rgb(10, 10, 10);
+    --txt-dark: rgb(245, 245, 245);
+    --line-light: rgba(0 0 0 / 0.25);
+    --line-dark: rgba(255 255 255 / 0.25);
+  }
+  .msg-supports {
+    font-size: 0.8rem;
+
+    /* hide warning if supported */
+    @supports selector(::scroll-marker-group) {
+      display: none;
+    }
+  }
+}

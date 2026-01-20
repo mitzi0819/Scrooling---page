@@ -1,6 +1,11 @@
+// ================================
+// GSAP Plugins
+// ================================
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Draggable);
 
-// Auto-Scroll zu Floor1 (min. 3 Sekunden)
+// ================================
+// Auto-Scroll (min. 3 Sekunden nach Start) zu Floor 1
+// ================================
 const pageStart = performance.now();
 window.scrollTo(0, 0);
 
@@ -21,9 +26,11 @@ window.addEventListener("load", () => {
   }, remaining);
 });
 
+// ================================
+// DOM Ready
+// ================================
 document.addEventListener("DOMContentLoaded", () => {
 
-  // Fade in Floors
   gsap.utils.toArray(".floor").forEach((floor) => {
     gsap.fromTo(
       floor,
@@ -42,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 
-  // Button Floor1 -> Floor2
   const btn = document.getElementById("scrollBtn");
   if (btn) {
     btn.addEventListener("click", () => {
@@ -50,117 +56,46 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ===== Floor2: Klick auf Raum -> Person rein/raus =====
- const slides = document.querySelectorAll("#floor2Id #slider .slide");
+  const RADIUS = 160;
+  const SOFT_EDGE = 70;
 
-slides.forEach((slide) => {
-  const room = slide.querySelector(".room");
-  const suspect = slide.querySelector(".suspect");
-  if (!room || !suspect) return;
+  document.querySelectorAll(".flashlight-scene").forEach((scene) => {
+    const yellow = scene.querySelector(".flashlight-yellow");
+    if (!yellow) return;
 
-  gsap.set(suspect, { xPercent: 120, autoAlpha: 0 });
+    function setMask(x, y, radius, soft) {
+      const mask = `radial-gradient(circle ${radius}px at ${x}px ${y}px,
+        rgba(0,0,0,1) 0px,
+        rgba(0,0,0,1) ${Math.max(0, radius - soft)}px,
+        rgba(0,0,0,0) ${radius}px
+      )`;
 
-  room.addEventListener("click", () => {
-    const isIn = slide.classList.contains("suspect-in");
+      yellow.style.webkitMaskImage = mask;
+      yellow.style.maskImage = mask;
+      yellow.style.webkitMaskRepeat = "no-repeat";
+      yellow.style.maskRepeat = "no-repeat";
+      yellow.style.webkitMaskSize = "100% 100%";
+      yellow.style.maskSize = "100% 100%";
+    }
 
-    gsap.to(suspect, {
-      xPercent: isIn ? 120 : 0,
-      autoAlpha: isIn ? 0 : 1,
-      duration: isIn ? 0.6 : 0.8,
-      ease: isIn ? "power2.inOut" : "power3.out"
+    function relPos(clientX, clientY) {
+      const r = scene.getBoundingClientRect();
+      return { x: clientX - r.left, y: clientY - r.top };
+    }
+
+    scene.addEventListener("mousemove", (e) => {
+      const { x, y } = relPos(e.clientX, e.clientY);
+      setMask(x, y, RADIUS, SOFT_EDGE);
     });
 
-    slide.classList.toggle("suspect-in");
-  });
-});
+    scene.addEventListener("mouseenter", (e) => {
+      const { x, y } = relPos(e.clientX, e.clientY);
+      setMask(x, y, RADIUS, SOFT_EDGE);
+    });
 
-  // Optional: Beim Slide-Wechsel Person wieder raus
-  document.querySelectorAll('#floor2Id #slider input[name="slider"]').forEach((radio) => {
-    radio.addEventListener("change", () => {
-      slides.forEach((slide) => {
-        slide.classList.remove("suspect-in");
-        const suspect = slide.querySelector("img.suspect");
-        if (suspect) gsap.set(suspect, { xPercent: 120, autoAlpha: 0 });
-      });
+    scene.addEventListener("mouseleave", () => {
+      setMask(0, 0, 0, 0);
     });
   });
-
-  /// ===== Floor4: Infinite Horizontal Scroll (ohne Buttons) =====
-(() => {
-  const floor4 = document.querySelector("#floor4Id");
-  if (!floor4) return;
-
-  const viewport = floor4.querySelector(".carousel-viewport");
-  const track = floor4.querySelector(".carousel-track");
-  if (!viewport || !track) return;
-
-  const VISIBLE = 3;
-
-  // Original Cards
-  const originals = Array.from(track.children);
-  if (originals.length <= VISIBLE) return;
-
-  // Klone: vorne letzte 3, hinten erste 3 (für nahtlosen Loop)
-  const headClones = originals.slice(0, VISIBLE).map((el) => el.cloneNode(true));
-  const tailClones = originals.slice(-VISIBLE).map((el) => el.cloneNode(true));
-
-  tailClones.forEach((c) => track.insertBefore(c, track.firstChild));
-  headClones.forEach((c) => track.appendChild(c));
-
-  const getStep = () => {
-    const card = track.querySelector(".card");
-    if (!card) return 0;
-    const gap = parseFloat(getComputedStyle(track).gap || "0") || 0;
-    return card.getBoundingClientRect().width + gap;
-  };
-
-  // Start: so scrollen, dass wir bei den Originalen beginnen (nach den vorderen Klonen)
-  const jumpToOriginalStart = () => {
-    const step = getStep();
-    if (!step) return;
-    viewport.scrollLeft = step * VISIBLE;
-  };
-
-  // nach Layout (damit Breite stimmt)
-  requestAnimationFrame(() => {
-    jumpToOriginalStart();
-  });
-
-  // Infinite-Logik: wenn du zu weit links/rechts scrollst, springt es unmerklich zurück
-  let ticking = false;
-
-  const onScroll = () => {
-    if (ticking) return;
-    ticking = true;
-
-    requestAnimationFrame(() => {
-      const step = getStep();
-      if (!step) { ticking = false; return; }
-
-      const totalOriginals = originals.length;
-      const leftLimit = step * (VISIBLE - 0.5); // etwas Puffer
-      const rightLimit = step * (VISIBLE + totalOriginals + 0.5);
-
-      // zu weit links -> ans Ende der Originale springen
-      if (viewport.scrollLeft < leftLimit) {
-        viewport.scrollLeft += step * totalOriginals;
-      }
-
-      // zu weit rechts -> an den Anfang der Originale springen
-      if (viewport.scrollLeft > rightLimit) {
-        viewport.scrollLeft -= step * totalOriginals;
-      }
-
-      ticking = false;
-    });
-  };
-
-  viewport.addEventListener("scroll", onScroll, { passive: true });
-
-  // Bei Resize neu ausrichten
-  window.addEventListener("resize", () => {
-    jumpToOriginalStart();
-  });
-})();
 
 });

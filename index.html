@@ -2,13 +2,14 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hochhaus</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+
     <header>
         <div class="headline">
             <div class="inner">
@@ -22,33 +23,40 @@
     <div class="building">
 
         <section id="floor1Id" class="floor floor1">
+
             <nav role="navigation">
                 <div id="menuToggle">
                     <input type="checkbox" id="menuCheckbox" />
-                    <span></span><span></span><span></span>
-                    <ul id="menu">text text text</ul>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <ul id="menu">
+                        text text text
+                    </ul>
                 </div>
             </nav>
 
-            <div class="illustration">
+            <div class="illustration">x
                 1. Stockwerk (Oberstes)
                 <button id="scrollBtn">↓</button>
                 <img src="pngs-neu/dachboden-sw.png" alt="">
             </div>
         </section>
 
-        <!-- FLOOR 2 -->
         <section id="floor2Id" class="floor floor2">
             <nav role="navigation">
                 <div id="menuToggle">
                     <input type="checkbox" id="menuCheckbox" />
-                    <span></span><span></span><span></span>
-                    <ul id="menu">text text text</ul>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <ul id="menu">
+                        text text text
+                    </ul>
                 </div>
             </nav>
 
             <div id="slider">
-                <!-- Slider Setup -->
                 <input type="radio" name="slider" id="slide1" checked />
                 <input type="radio" name="slider" id="slide2" />
                 <input type="radio" name="slider" id="slide3" />
@@ -56,43 +64,26 @@
                 <div class="slides">
                     <div class="overflow">
                         <div class="track">
-
-                            <!-- SLIDE 1 -->
                             <div class="slide">
                                 <div class="info">
                                     <h3>Verdächtiger 1</h3>
                                 </div>
-
-                                <div class="scene">
-                                    <img class="room" src="pngs-neu/werkstatt.png" alt="Werkstatt" />
-                                    <img class="suspect" src="pngs/verdächtige1_person.png" alt="Verdächtiger 1" />
-                                </div>
+                                <img src="pngs-neu/werkstatt.png" />
                             </div>
 
-                            <!-- SLIDE 2 -->
                             <div class="slide">
                                 <div class="info">
                                     <h3>Verdächtiger 2</h3>
                                 </div>
-                                <div class="scene">
-                                    <img class="room" src="pngs-neu/büro.png" alt="Büro" />
-                                    <img class="suspect" src="pngs/verdächtige2_person.png" alt="Verdächtiger 2" />
-                                </div>
-
+                                <img src="pngs-neu/büro.png" />
                             </div>
 
-                            <!-- SLIDE 3 -->
                             <div class="slide">
                                 <div class="info">
                                     <h3>Verdächtiger 3</h3>
                                 </div>
-
-                                <div class="scene">
-                                    <img class="room" src="pngs-neu/abstellkammer.png" alt="Abstellkammer" />
-                                    <img class="suspect" src="pngs/verdächtige3_person.png" alt="Verdächtiger 3" />
-                                </div>
+                                <img src="pngs-neu/abstellkammer.png" />
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -115,15 +106,44 @@
             <div class="illustration flashlight-scene">
                 <img class="flashlight-layer flashlight-bw" src="pngs-neu/dachboden-sw.png" alt="Tatort SW"
                     draggable="false">
+
                 <img class="flashlight-layer flashlight-yellow" src="pngs-neu/dachboden-gelb.png" alt="Tatort Gelb"
                     draggable="false">
             </div>
         </section>
 
-        <section id="floor4Id" class="floor floor4">
+        <section class="floor floor4">
+
+            <div class="illustration">
+
+                <section class="carousel" aria-label="Team carousel" id="teamCarousel">
+                    <div class="scroll-start">
+                        <h2>Raymond McKenzie</h2>
+                        <p>CEO</p>
+                        <div class="img"><img src="pngs-character-cards/verdächtigte-1.png" alt="verdächtigte-1">
+                        </div>
+                    </div>
+
+                    <div>
+                        <h2>Elizabeth Turner</h2>
+                        <p>Marketing Director</p>
+                        <div class="img"><img src="pngs-character-cards/verdächtigte-2.png" alt="verdächtigte-2"
+                                loading="lazy"></div>
+                    </div>
+
+                    <!-- define which element should be active on load -->
+                    <div>
+                        <h2>Suzanne Yorke</h2>
+                        <p>Creative Director</p>
+                        <div class="img"><img src="pngs-character-cards/verdächtigte-3.png" alt="verdächtigte-3"
+                                loading="lazy"></div>
+                    </div>
+
+
+                </section>
+
+            </div>
         </section>
-
-
 
         <section class="floor floor5">
             <div class="illustration">5. Stockwerk (Unterstes)</div>
@@ -131,14 +151,13 @@
 
     </div>
 
-    <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollToPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Draggable.min.js"></script>
 
-    <!-- dein Script NUR EINMAL -->
     <script src="main.js"></script>
+
 </body>
 
 </html>
