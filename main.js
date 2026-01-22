@@ -1,18 +1,14 @@
 // ================================
-// GSAP Plugins
+// GSAP Plugins (nur die, die du nutzt)
 // ================================
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Draggable);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 // ================================
-// Auto-Scroll (min. 3 Sekunden nach Start) zu Floor 1
+// Auto-Scroll (nach 3 Sekunden) zu Floor 1
 // ================================
-const pageStart = performance.now();
 window.scrollTo(0, 0);
 
 window.addEventListener("load", () => {
-  const elapsed = performance.now() - pageStart;
-  const remaining = Math.max(0, 3000 - elapsed);
-
   setTimeout(() => {
     const target = document.querySelector("#floor1Id");
     if (!target) return;
@@ -23,14 +19,14 @@ window.addEventListener("load", () => {
       scrollTo: { y: target, offsetY: 0, autoKill: false },
       onComplete: () => ScrollTrigger.refresh()
     });
-  }, remaining);
+  }, 3000);
 });
 
 // ================================
 // DOM Ready
 // ================================
 document.addEventListener("DOMContentLoaded", () => {
-
+  // Fade-in je Floor beim Scrollen
   gsap.utils.toArray(".floor").forEach((floor) => {
     gsap.fromTo(
       floor,
@@ -49,13 +45,23 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 
+  // Button: scrollt zu Floor 2 (optional: mit GSAP statt scrollIntoView)
   const btn = document.getElementById("scrollBtn");
-  if (btn) {
+  const floor2 = document.getElementById("floor2Id");
+
+  if (btn && floor2) {
     btn.addEventListener("click", () => {
-      document.getElementById("floor2Id")?.scrollIntoView({ behavior: "smooth" });
+      gsap.to(window, {
+        duration: 1,
+        ease: "power2.inOut",
+        scrollTo: { y: floor2, offsetY: 0, autoKill: true }
+      });
     });
   }
 
+  // ================================
+  // Taschenlampen-Effekt
+  // ================================
   const RADIUS = 160;
   const SOFT_EDGE = 70;
 
@@ -63,11 +69,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const yellow = scene.querySelector(".flashlight-yellow");
     if (!yellow) return;
 
-    function setMask(x, y, radius, soft) {
-      const mask = `radial-gradient(circle ${radius}px at ${x}px ${y}px,
+    const setMask = (x, y) => {
+      const inner = Math.max(0, RADIUS - SOFT_EDGE);
+
+      const mask = `radial-gradient(circle ${RADIUS}px at ${x}px ${y}px,
         rgba(0,0,0,1) 0px,
-        rgba(0,0,0,1) ${Math.max(0, radius - soft)}px,
-        rgba(0,0,0,0) ${radius}px
+        rgba(0,0,0,1) ${inner}px,
+        rgba(0,0,0,0) ${RADIUS}px
       )`;
 
       yellow.style.webkitMaskImage = mask;
@@ -76,26 +84,33 @@ document.addEventListener("DOMContentLoaded", () => {
       yellow.style.maskRepeat = "no-repeat";
       yellow.style.webkitMaskSize = "100% 100%";
       yellow.style.maskSize = "100% 100%";
-    }
+    };
 
-    function relPos(clientX, clientY) {
+    const relPos = (e) => {
       const r = scene.getBoundingClientRect();
-      return { x: clientX - r.left, y: clientY - r.top };
-    }
+      return { x: e.clientX - r.left, y: e.clientY - r.top };
+    };
 
+    // Maus bewegt -> Maske folgt
     scene.addEventListener("mousemove", (e) => {
-      const { x, y } = relPos(e.clientX, e.clientY);
-      setMask(x, y, RADIUS, SOFT_EDGE);
+      const { x, y } = relPos(e);
+      setMask(x, y);
     });
 
+    // Beim Rein: gleich an der Eintrittsposition anzeigen
     scene.addEventListener("mouseenter", (e) => {
-      const { x, y } = relPos(e.clientX, e.clientY);
-      setMask(x, y, RADIUS, SOFT_EDGE);
+      const { x, y } = relPos(e);
+      setMask(x, y);
     });
 
+    // Beim Raus: Effekt aus
     scene.addEventListener("mouseleave", () => {
-      setMask(0, 0, 0, 0);
+      // "aus" setzen (Radius 0)
+      const maskOff = `radial-gradient(circle 0px at 0px 0px,
+        rgba(0,0,0,0) 0px, rgba(0,0,0,0) 100%
+      )`;
+      yellow.style.webkitMaskImage = maskOff;
+      yellow.style.maskImage = maskOff;
     });
   });
-
 });
