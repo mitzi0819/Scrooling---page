@@ -149,32 +149,38 @@ document.getElementById("scrollBtn4").addEventListener("click", () => {
 });
 
 
- const infoBox = document.getElementById("infoBox");
-  const section = document.querySelector(".floor");
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          infoBox.classList.add("active");
-          observer.unobserve(entry.target); // nur einmal
-        }
-      });
-    },
-    {
-      threshold: 0.4
-    }
-  );
+// INFO BOX 
 
-  observer.observe(section);
 
-  // Klick → raus + danach komplett weg
-  infoBox.addEventListener("click", () => {
-    infoBox.classList.remove("active");
-    infoBox.classList.add("exit");
+const infoBox1 = document.getElementById("infoBox1");
+const section = document.querySelector(".floor");
 
-    infoBox.addEventListener("transitionend", () => {
-      infoBox.style.display = "none";
-    }, { once: true });
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        infoBox1.classList.add("active");
+        observer.unobserve(entry.target); // nur einmal
+      }
+    });
+  },
+  {
+    threshold: 0.4
+  }
+);
+
+observer.observe(section);
+
+// Klick → raus + danach komplett weg
+infoBox1.addEventListener("click", () => {
+  infoBox1.classList.remove("active");
+  infoBox1.classList.add("exit");
+
+  infoBox1.addEventListener("transitionend", () => {
+    infoBox1.style.display = "none";
+  }, { once: true });
+  document.getElementById("floor2Id").scrollIntoView({
+    behavior: "smooth"
   });
-
+});
