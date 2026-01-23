@@ -147,3 +147,34 @@ document.getElementById("scrollBtn4").addEventListener("click", () => {
     behavior: "smooth"
   });
 });
+
+
+ const infoBox = document.getElementById("infoBox");
+  const section = document.querySelector(".floor");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          infoBox.classList.add("active");
+          observer.unobserve(entry.target); // nur einmal
+        }
+      });
+    },
+    {
+      threshold: 0.4
+    }
+  );
+
+  observer.observe(section);
+
+  // Klick → raus + danach komplett weg
+  infoBox.addEventListener("click", () => {
+    infoBox.classList.remove("active");
+    infoBox.classList.add("exit");
+
+    infoBox.addEventListener("transitionend", () => {
+      infoBox.style.display = "none";
+    }, { once: true });
+  });
+
