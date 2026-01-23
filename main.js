@@ -114,3 +114,36 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+document.getElementById("scrollImage").addEventListener("click", function () {
+  document.getElementById("targetDiv").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+});
+
+document.getElementById("reloadImage").addEventListener("click", () => {
+  location.reload(true);
+});
+
+document.getElementById("reloadImage2").addEventListener("click", () => {
+  location.reload(true);
+});
+
+document.getElementById("scrollBtn2").addEventListener("click", () => {
+  document.getElementById("floor2Id").scrollIntoView({
+    behavior: "smooth"
+  });
+});
+
+document.getElementById("scrollBtn3").addEventListener("click", () => {
+  document.getElementById("floor3Id").scrollIntoView({
+    behavior: "smooth"
+  });
+});
+
+document.getElementById("scrollBtn4").addEventListener("click", () => {
+  document.getElementById("floor4Id").scrollIntoView({
+    behavior: "smooth"
+  });
+});

@@ -16,11 +16,11 @@
                 <h1>Willkommen im Hochhaus</h1>
                 <p>Scroll down the page</p>
             </div>
-            <div class="scroll-hint">↓ Scroll</div>
         </div>
+        
     </header>
 
-    <div class="building">
+    <div id="building" class="building">
 
         <section id="floor1Id" class="floor floor1">
 
@@ -36,11 +36,12 @@
                 </div>
             </nav>
 
-            <div class="illustration">x
+            <div class="illustration">
                 1. Stockwerk (Oberstes)
-                <button id="scrollBtn">↓</button>
+
                 <img src="pngs-neu/dachboden-sw.png" alt="">
             </div>
+            <div id="scrollBtn2" class="scroll-button">↓ Scroll</div>
         </section>
 
         <section id="floor2Id" class="floor floor2">
@@ -100,9 +101,10 @@
                     <label for="slide3"></label>
                 </div>
             </div>
+            <div id="scrollBtn3" class="scroll-button">↓ Scroll</div>
         </section>
 
-        <section class="floor floor3">
+        <section id="floor3Id" class="floor floor3">
             <div class="illustration flashlight-scene">
                 <img class="flashlight-layer flashlight-bw" src="pngs-neu/dachboden-sw.png" alt="Tatort SW"
                     draggable="false">
@@ -110,6 +112,8 @@
                 <img class="flashlight-layer flashlight-yellow" src="pngs-neu/dachboden-gelb.png" alt="Tatort Gelb"
                     draggable="false">
             </div>
+            <div id="scrollBtn4" class="scroll-button">↓ Scroll</div>
+
         </section>
 
         <section class="floor floor4" id="floor4Id">
@@ -134,15 +138,18 @@
                     <div class="overflow">
                         <div class="track">
                             <div class="slide">
-                                <img src="pngs-character-cards/verdächtigte-1.png" alt="Verdächtige 1" />
+                                <img id="reloadImage" src="pngs-character-cards/verdächtigte-1.png"
+                                    alt="Verdächtige 1" />
                             </div>
 
                             <div class="slide">
-                                <img src="pngs-character-cards/verdächtigte-2.png" alt="Verdächtige 2" />
+                                <img id="reloadImage2" src="pngs-character-cards/verdächtigte-2.png"
+                                    alt="Verdächtige 2" />
                             </div>
 
                             <div class="slide">
-                                <img src="pngs-character-cards/verdächtigte-3.png" alt="Verdächtige 3" />
+                                <img id="scrollImage" src="pngs-character-cards/verdächtigte-3.png"
+                                    alt="Verdächtige 3" />
                             </div>
                         </div>
                     </div>
@@ -160,13 +167,15 @@
                     <label for="slide4-3"></label>
                 </div>
             </div>
-        </section>
 
 
         </section>
+
 
         <section class="floor floor5">
-            <div class="illustration">5. Stockwerk (Unterstes)</div>
+            <div id="targetDiv" class="illustration">5. Stockwerk (Unterstes)
+                <img src="pngs-Eingang/eingang.png" alt="">
+            </div>
         </section>
 
     </div>
